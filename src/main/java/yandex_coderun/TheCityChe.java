@@ -3,9 +3,9 @@ package yandex_coderun;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.StringTokenizer;
 
 /*
 В центре города Че есть пешеходная улица - одно из самых популярных мест для прогулок жителей города.
@@ -46,12 +46,17 @@ public class TheCityChe {
             }
         }
         System.out.println(counter);
-     }
+    }
 
+    private static List<Long> readList(BufferedReader reader) throws IOException {
+        StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
+        List<Long> result = new ArrayList<>();
+        int countTokens = tokenizer.countTokens();
+        while (countTokens > 0) {
+            result.add(Long.parseLong(tokenizer.nextToken()));
+            countTokens--;
+        }
+        return result;
+    }
 
-     private static List<Long> readList(BufferedReader reader) throws IOException{
-        return Arrays.stream(reader.readLine().strip().split(" "))
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
-     }
 }
