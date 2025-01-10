@@ -1,29 +1,22 @@
-package pricticum_structures.sprint5.graph;
+package pricticum_structures.sprint6;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-public class MaxDistanceInGraph {
+public class DFS {
 
     public static void main(String[] args) throws IOException {
-
         int n;
-        int m;
-        int[] colors;
-        int[] distance;
+        int m; // edges
+        int s; //start
         Map<Integer, List<Integer>> graph = new HashMap<>();
-        int s;
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-
             StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
             n = Integer.parseInt(tokenizer.nextToken());
             m = Integer.parseInt(tokenizer.nextToken());
-            colors = new int[n + 1];
-            distance = new int[n + 1];
-
             for (int i = 0; i < m; i++) {
                 StringTokenizer edge = new StringTokenizer(reader.readLine());
                 int from = Integer.parseInt(edge.nextToken());
@@ -38,31 +31,45 @@ public class MaxDistanceInGraph {
                 graph.put(from, fromVertices);
                 graph.put(to, toVertices);
             }
+
             s = Integer.parseInt(reader.readLine());
         }
 
-        bfsWithDistance(s, colors, distance, graph);
-        System.out.println(Arrays.stream(distance).max().getAsInt());
+        if (!graph.containsKey(s)) {
+            graph.put(s, new ArrayList<>());
+        }
+
+        for (List<Integer> vertices : graph.values()) {
+            vertices.sort((a,b) -> Integer.compare(a,b) * -1);
+        }
+
+        int[] color = new int[n + 1];
+        StringBuilder buffer = new StringBuilder();
+
+        Dfs(s, graph, buffer, color);
+
+        System.out.println(buffer);
     }
 
-    private static void bfsWithDistance(int s, int[] color, int[] distance, Map<Integer, List<Integer>> graph) {
-        Queue<Integer> planned = new LinkedList<>();
-        planned.add(s);
-        color[s] = 1;
+    private static void Dfs(int start, Map<Integer, List<Integer>> graph, StringBuilder buffer, int[] color) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(start);
 
-        while (!planned.isEmpty()) {
-            int u = planned.poll();
+        while (!stack.isEmpty()) {
+            int v = stack.pop();
 
-            for (int v : graph.getOrDefault(u, new ArrayList<>())) {
-                if (color[v] == 0) {
-                    distance[v] = distance[u] + 1;
-                    color[v] = 1;
-                    planned.add(v);
+            if (color[v] == 0) {
+                color[v] = 1;
+                stack.push(v);
+                buffer.append(v).append(" ");
+
+                for (int w : graph.get(v)) {
+                    if (color[w] == 0) {
+                        stack.push(w);
+                    }
                 }
             }
-            color[u] = 2;
+
         }
     }
-
-
 }

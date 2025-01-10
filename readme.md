@@ -6,3 +6,4 @@
 * Спринт 3: [Рекурсия и сортировки 14/16](https://contest.yandex.ru/contest/23638/problems/)
 * Спринт 4: [Хеш функции 10/12](https://contest.yandex.ru/contest/23991/problems/)
 * Спринт 5: [Деревья 13/14](https://contest.yandex.ru/contest/24809/problems/)
+* Спринт 6: [Графы 9/12](https://contest.yandex.ru/contest/25069/problems/)

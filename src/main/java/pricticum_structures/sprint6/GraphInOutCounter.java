@@ -1,4 +1,4 @@
-package pricticum_structures.sprint5.graph;
+package pricticum_structures.sprint6;
 
 import java.io.BufferedReader;
 import java.io.IOException;
