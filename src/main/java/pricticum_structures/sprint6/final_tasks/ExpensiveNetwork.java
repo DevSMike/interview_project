@@ -7,7 +7,7 @@ import java.util.*;
 
 
 /*
-yandex contest: https://contest.yandex.ru/contest/25070/run-report/131217724/
+yandex contest: https://contest.yandex.ru/contest/25070/run-report/131358856/
 
 Требовалось реализовать алгоритм поиска максимального остовного дерева
 
@@ -37,67 +37,11 @@ addVertex() за O(log(m)) и heap.popMax() за O(log(m))  = O(n * (O(log(m) + 
 
  ==> пространственная сложность O(n + m);
  */
-class Heap {
-    List<ExpensiveNetwork.Edge> heap;
-
-    public Heap() {
-        heap = new ArrayList<>();
-        heap.add(new ExpensiveNetwork.Edge(0, 0, -1));
-    }
-
-    public boolean isEmpty() {
-        return heap.size() == 1;
-    }
-
-    public void addHeap(ExpensiveNetwork.Edge edge) {
-        heap.add(edge);
-        shiftUp(heap.size() - 1);
-    }
-
-    public ExpensiveNetwork.Edge popMax() {
-        ExpensiveNetwork.Edge result = heap.get(1);
-        heap.set(1, heap.get(heap.size() - 1));
-        heap.remove(heap.size() - 1);
-        shiftDown(1);
-        return result;
-    }
-
-    private void shiftUp(int index) {
-        if (index <= 1) {
-            return;
-        }
-
-        int parentIndex = index / 2;
-        if (heap.get(parentIndex).weight < heap.get(index).weight) {
-            Collections.swap(heap, parentIndex, index);
-            shiftUp(parentIndex);
-        }
-    }
-
-    private void shiftDown(int index) {
-        int leftIndex = index * 2;
-        int rightIndex = index * 2 + 1;
-
-        if (leftIndex >= heap.size()) {
-            return;
-        }
-
-        int largestIndex = leftIndex;
-        if (rightIndex < heap.size() && heap.get(rightIndex).weight > heap.get(leftIndex).weight) {
-            largestIndex = rightIndex;
-        }
-
-        if (heap.get(largestIndex).weight > heap.get(index).weight) {
-            Collections.swap(heap, largestIndex, index);
-            shiftDown(largestIndex);
-        }
-    }
-}
 
 public class ExpensiveNetwork {
     static final String WRONG_ANSWER = "Oops! I did it again";
 
-    static class Edge {
+    static class Edge implements Comparable<Edge> {
         int start;
         int end;
         int weight;
@@ -107,24 +51,25 @@ public class ExpensiveNetwork {
             this.end = end;
             this.weight = weight;
         }
+
+        @Override
+        public int compareTo(Edge o) {
+            return -1 * Integer.compare(this.weight, o.weight);
+        }
     }
 
     public static void main(String[] args) throws IOException {
-
         int n;
         int m;
         int startVertex = 1;
-
-        Map<Integer, List<Edge>> graph = new HashMap<>();
+        List<Edge>[] graph;
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
             n = Integer.parseInt(tokenizer.nextToken());
             m = Integer.parseInt(tokenizer.nextToken());
-
-            if (m == 0) {
-                fillGraphBase(graph, n);
-            }
+            graph = new ArrayList[n + 1];
+            fillGraph(graph, n);
 
             for (int i = 0; i < m; i++) {
                 StringTokenizer edge = new StringTokenizer(reader.readLine());
@@ -132,13 +77,13 @@ public class ExpensiveNetwork {
                 int end = Integer.parseInt(edge.nextToken());
                 int weight = Integer.parseInt(edge.nextToken());
 
-                List<Edge> startEdges = graph.getOrDefault(start, new ArrayList<>());
+                List<Edge> startEdges = graph[start];
                 startEdges.add(new Edge(start, end, weight));
-                List<Edge> endEdges = graph.getOrDefault(end, new ArrayList<>());
+                List<Edge> endEdges = graph[end];
                 endEdges.add(new Edge(end, start, weight));
 
-                graph.put(start, startEdges);
-                graph.put(end, endEdges);
+                graph[start] = startEdges;
+                graph[end] = endEdges;
 
                 if (startVertex == 1) {
                     startVertex = start;
@@ -157,28 +102,28 @@ public class ExpensiveNetwork {
 
     }
 
-    private static void fillGraphBase(Map<Integer, List<Edge>> graph, int n) {
+    private static void fillGraph(List<Edge>[] graph, int n) {
         while (n > 0) {
-            graph.put(n--, new ArrayList<>());
+            graph[n--] = new ArrayList<>();
         }
     }
 
-    private static int findMst(Map<Integer, List<Edge>> graph, List<Edge> mst, int startVertex) {
-        Set<Integer> notAdded = new HashSet<>(graph.keySet());
-        Set<Integer> added = new HashSet<>();
-        Heap edges = new Heap();
+    private static int findMst(List<Edge>[] graph, List<Edge> mst, int startVertex) {
+        int graphSize = graph.length - 1;
+        Set<Integer> visited = new HashSet<>();
+        PriorityQueue<Edge> edges = new PriorityQueue<>();
 
-        addVertex(startVertex, edges, added, notAdded, graph.get(startVertex));
+        addVertex(startVertex, edges, visited, graph[startVertex]);
 
-        while (!notAdded.isEmpty() && !edges.isEmpty()) {
-            Edge maxEdge = edges.popMax();
-            if (notAdded.contains(maxEdge.end)) {
+        while (visited.size() < graphSize && !edges.isEmpty()) {
+            Edge maxEdge = edges.poll();
+            if (!visited.contains(maxEdge.end)) {
                 mst.add(maxEdge);
-                addVertex(maxEdge.end, edges, added, notAdded, graph.get(maxEdge.end));
+                addVertex(maxEdge.end, edges, visited, graph[maxEdge.end]);
             }
         }
 
-        if (!notAdded.isEmpty()) {
+        if (visited.size() < graphSize) {
             return -1;
         }
 
@@ -194,14 +139,11 @@ public class ExpensiveNetwork {
         return maxWeight;
     }
 
-    private static void addVertex(int v, Heap edges, Set<Integer> added, Set<Integer> notAdded,
-                                  List<Edge> vertexEdges) {
-        added.add(v);
-        notAdded.remove(v);
-
+    private static void addVertex(int v, PriorityQueue<Edge> edges, Set<Integer> visited, List<Edge> vertexEdges) {
+        visited.add(v);
         for (Edge edge : vertexEdges) {
-            if (notAdded.contains(edge.end)) {
-                edges.addHeap(edge);
+            if (!visited.contains(edge.end)) {
+                edges.add(edge);
             }
         }
     }

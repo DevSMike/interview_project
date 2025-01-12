@@ -7,7 +7,7 @@ import java.util.*;
 
 
 /*
-yandex contest: https://contest.yandex.ru/contest/25070/run-report/131227364/
+yandex contest: https://contest.yandex.ru/contest/25070/run-report/131362055/
 
 Требовалось реализовать поиск всех остравов
 
@@ -23,16 +23,19 @@ yandex contest: https://contest.yandex.ru/contest/25070/run-report/131227364/
 матрицы, то она не будет рассмотрена => длина острова также рассчитывается корректно.
 
 -- ВРЕМЕННАЯ СЛОЖНОСТЬ --
-Пусть N - размер входных данных, N = rows * cols;
-Тогда сложность dfs() будет O(N), в худшем случае вся матрица - целый остров.
-Тогда итоговая сложность алгоритма O(N^2), т.к. мы пробегаемся по всей матрице, на каждом шаге выполняя dfs();
-= > O(N^2).
+Пусть N = rows * cols;
+dfs() запускается только для уникальных клеток, если клетка обработалась, то второй раз она не будет обрабатываться.
+dfs() в худшем случае (вся матрица - овстров) отработает 1 раз за O(N) и больше не выполнится.
+Цикл с проходом по матрице работает за O(N).
+Так как dfs() выполняется только для непосещенных клеток, т.е. каждая клетка обрабатывается только 1 раз за весь алгоритм,
+== > итоговая временная сложность будет O(N).
 
 -- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
 Пусть M = rows * cols - размер входных данных.
 Мы храним матрицу - эо O(M) памяти
-В dfs() используется вспомогательная структура - стек. Он может хранить в худшем случае M элементов => сложность O(M);
- ==> O(M^2) памяти
+В dfs() используется доп память в виде стека. В худшем случае стек будет хранить всю матрицу - O(M), но в таком случае
+это будет выполнено на одной итерации, а не каждой итерации цикла
+== > итоговая пространственная сложность O(M).
  */
 
 public class WaterWorld {
@@ -42,7 +45,6 @@ public class WaterWorld {
         int rows;
         int cols;
         char[][] matrix;
-        boolean[][] visited;
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
@@ -50,7 +52,6 @@ public class WaterWorld {
             cols = Integer.parseInt(tokenizer.nextToken());
 
             matrix = new char[rows][cols];
-            visited = new boolean[rows][cols];
 
             for (int i = 0; i < rows; i++) {
                 String row = reader.readLine();
@@ -65,9 +66,9 @@ public class WaterWorld {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (matrix[i][j] == '#' && !visited[i][j]) {
+                if (matrix[i][j] == '#') {
                     count++;
-                    int size = dfs(i, j, matrix, visited, rows, cols);
+                    int size = dfs(i, j, matrix, rows, cols);
                     maxLen = Math.max(maxLen, size);
                 }
             }
@@ -76,10 +77,10 @@ public class WaterWorld {
         System.out.print(count + " " + maxLen);
     }
 
-    private static int dfs(int x, int y, char[][] matrix, boolean[][] visited, int rows, int cols) {
+    private static int dfs(int x, int y, char[][] matrix,  int rows, int cols) {
         Stack<int[]> stack = new Stack<>();
         stack.push(new int[]{x, y});
-        visited[x][y] = true;
+        matrix[x][y] = '.';
         int size = 0;
 
         while (!stack.empty()) {
@@ -89,8 +90,8 @@ public class WaterWorld {
             for (int i = 0; i < DIRECTIONS.length - 1; i++) {
                 int newX = current[0] + DIRECTIONS[i];
                 int newY = current[1] + DIRECTIONS[i + 1];
-                if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && matrix[newX][newY] == '#' && !visited[newX][newY]) {
-                    visited[newX][newY] = true;
+                if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && matrix[newX][newY] == '#') {
+                    matrix[newX][newY] = '.';
                     stack.push(new int[]{newX, newY});
                 }
             }
