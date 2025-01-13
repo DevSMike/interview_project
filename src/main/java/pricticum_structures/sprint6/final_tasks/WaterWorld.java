@@ -7,7 +7,7 @@ import java.util.*;
 
 
 /*
-yandex contest: https://contest.yandex.ru/contest/25070/run-report/131362055/
+yandex contest: https://contest.yandex.ru/contest/25070/run-report/131414357/
 
 Требовалось реализовать поиск всех остравов
 
@@ -23,23 +23,25 @@ yandex contest: https://contest.yandex.ru/contest/25070/run-report/131362055/
 матрицы, то она не будет рассмотрена => длина острова также рассчитывается корректно.
 
 -- ВРЕМЕННАЯ СЛОЖНОСТЬ --
-Пусть N = rows * cols;
+n = rows, m - columns;
 dfs() запускается только для уникальных клеток, если клетка обработалась, то второй раз она не будет обрабатываться.
-dfs() в худшем случае (вся матрица - овстров) отработает 1 раз за O(N) и больше не выполнится.
-Цикл с проходом по матрице работает за O(N).
+dfs() в худшем случае (вся матрица - остров) отработает 1 раз за O(n * m) и больше не выполнится.
+Цикл с проходом по матрице работает за O(n * m).
 Так как dfs() выполняется только для непосещенных клеток, т.е. каждая клетка обрабатывается только 1 раз за весь алгоритм,
-== > итоговая временная сложность будет O(N).
+== > итоговая временная сложность будет O(n * m).
 
 -- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
-Пусть M = rows * cols - размер входных данных.
-Мы храним матрицу - эо O(M) памяти
-В dfs() используется доп память в виде стека. В худшем случае стек будет хранить всю матрицу - O(M), но в таком случае
+n = rows, m - columns;
+Мы храним матрицу - эо O(n * m) памяти
+В dfs() используется доп память в виде стека. В худшем случае стек будет хранить всю матрицу - O(n * m), но в таком случае
 это будет выполнено на одной итерации, а не каждой итерации цикла
-== > итоговая пространственная сложность O(M).
+== > итоговая пространственная сложность O(n * m).
  */
 
 public class WaterWorld {
     private static final int[] DIRECTIONS = {-1, 0, 1, 0, -1};
+    private static final Character SHARP = '#';
+    private static final Character DOT = '.';
 
     public static void main(String[] args) throws IOException {
         int rows;
@@ -66,7 +68,7 @@ public class WaterWorld {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (matrix[i][j] == '#') {
+                if (matrix[i][j] == SHARP) {
                     count++;
                     int size = dfs(i, j, matrix, rows, cols);
                     maxLen = Math.max(maxLen, size);
@@ -77,10 +79,10 @@ public class WaterWorld {
         System.out.print(count + " " + maxLen);
     }
 
-    private static int dfs(int x, int y, char[][] matrix,  int rows, int cols) {
+    private static int dfs(int x, int y, char[][] matrix, int rows, int cols) {
         Stack<int[]> stack = new Stack<>();
         stack.push(new int[]{x, y});
-        matrix[x][y] = '.';
+        matrix[x][y] = DOT;
         int size = 0;
 
         while (!stack.empty()) {
@@ -90,8 +92,8 @@ public class WaterWorld {
             for (int i = 0; i < DIRECTIONS.length - 1; i++) {
                 int newX = current[0] + DIRECTIONS[i];
                 int newY = current[1] + DIRECTIONS[i + 1];
-                if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && matrix[newX][newY] == '#') {
-                    matrix[newX][newY] = '.';
+                if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && matrix[newX][newY] == SHARP) {
+                    matrix[newX][newY] = DOT;
                     stack.push(new int[]{newX, newY});
                 }
             }

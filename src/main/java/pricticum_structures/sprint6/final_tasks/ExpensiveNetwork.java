@@ -7,7 +7,7 @@ import java.util.*;
 
 
 /*
-yandex contest: https://contest.yandex.ru/contest/25070/run-report/131358856/
+yandex contest: https://contest.yandex.ru/contest/25070/run-report/131411689/
 
 Требовалось реализовать алгоритм поиска максимального остовного дерева
 
@@ -31,7 +31,7 @@ addVertex() за O(log(m)) и heap.popMax() за O(log(m))  = O(n * (O(log(m) + 
 
 -- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
  Пусть n - кол-во вершин; m - кол-во ребер
- Граф хранится в виде списка смежности : O( n + m)
+ Граф хранится в виде списка смежности : O(n + m)
  Доп множества посещенных && непосещенных вершин : O(n) + O(n)
  Куча с ребрами: O(m)
 
@@ -84,10 +84,6 @@ public class ExpensiveNetwork {
 
                 graph[start] = startEdges;
                 graph[end] = endEdges;
-
-                if (startVertex == 1) {
-                    startVertex = start;
-                }
             }
         }
 
@@ -109,21 +105,23 @@ public class ExpensiveNetwork {
     }
 
     private static int findMst(List<Edge>[] graph, List<Edge> mst, int startVertex) {
-        int graphSize = graph.length - 1;
-        Set<Integer> visited = new HashSet<>();
+        boolean[] visited = new boolean[graph.length];
+        int notVisitedCounter = graph.length - 1;
         PriorityQueue<Edge> edges = new PriorityQueue<>();
 
         addVertex(startVertex, edges, visited, graph[startVertex]);
+        notVisitedCounter--;
 
-        while (visited.size() < graphSize && !edges.isEmpty()) {
+        while (notVisitedCounter > 0 && !edges.isEmpty()) {
             Edge maxEdge = edges.poll();
-            if (!visited.contains(maxEdge.end)) {
+            if (!visited[maxEdge.end]) {
                 mst.add(maxEdge);
                 addVertex(maxEdge.end, edges, visited, graph[maxEdge.end]);
+                notVisitedCounter--;
             }
         }
 
-        if (visited.size() < graphSize) {
+        if (notVisitedCounter > 0) {
             return -1;
         }
 
@@ -139,10 +137,10 @@ public class ExpensiveNetwork {
         return maxWeight;
     }
 
-    private static void addVertex(int v, PriorityQueue<Edge> edges, Set<Integer> visited, List<Edge> vertexEdges) {
-        visited.add(v);
+    private static void addVertex(int v, PriorityQueue<Edge> edges, boolean[] visited, List<Edge> vertexEdges) {
+        visited[v] = true;
         for (Edge edge : vertexEdges) {
-            if (!visited.contains(edge.end)) {
+            if (!visited[edge.end]) {
                 edges.add(edge);
             }
         }
