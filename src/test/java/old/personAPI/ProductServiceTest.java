@@ -24,7 +24,7 @@ public class ProductServiceTest {
 
     @Test
     void checkSaveMethodProductIdBiggerThanZeroShouldBeTrue() {
-        Product product = new Product("123", "Test Product");
+        Product product = new Product("123", "old.personAPI.Test Product");
         when(repository.saveProduct(product)).thenReturn(true);
         boolean result = productService.addProduct(product);
         assertTrue(result);
