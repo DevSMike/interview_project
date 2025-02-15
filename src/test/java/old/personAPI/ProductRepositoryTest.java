@@ -1,10 +1,10 @@
 package old.personAPI;
 
 import lombok.extern.slf4j.Slf4j;
-import old.personAPI.model.Product;
+import personAPI.model.Product;
 import org.junit.jupiter.api.Test;
-import old.personAPI.repository.ProductRepository;
-import old.personAPI.repository.ProductRepositoryImpl;
+import personAPI.repository.ProductRepository;
+import personAPI.repository.ProductRepositoryImpl;
 
 import java.util.List;
 import java.util.Optional;

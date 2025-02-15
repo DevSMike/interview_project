@@ -1,6 +1,6 @@
 package old.personAPI;
 
-import old.ATM;
+import interview.ATM;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

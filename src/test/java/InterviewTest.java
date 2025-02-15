@@ -1,5 +1,5 @@
-import old.interview.InterviewClass;
-import old.interview.Item;
+import interview.InterviewClass;
+import leetcode.Item;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -24,10 +24,10 @@ public class InterviewTest {
 //        Map<Integer, Integer> users = Map.of(1, 20, 2, 45);
 //        interviewClass = new old.interview.InterviewClass(users);
 //
-//        List<old.interview.Item> items = new ArrayList<>(List.of(new old.interview.Item(1, 100, 100),
-//                new old.interview.Item(2, 850, 850)));
+//        List<old.leetcode.Item> items = new ArrayList<>(List.of(new old.leetcode.Item(1, 100, 100),
+//                new old.leetcode.Item(2, 850, 850)));
 //
-//        List<old.interview.Item> finalItem = interviewClass.getBucket(1, items);
+//        List<old.leetcode.Item> finalItem = interviewClass.getBucket(1, items);
 //        assertEquals(80, finalItem.get(0).getFinalPrice());
 //    }
 
@@ -52,10 +52,10 @@ public class InterviewTest {
 //        Map<Integer, Integer> users = Map.of(1, 20, 2, 45);
 //        interviewClass = new old.interview.InterviewClass(users);
 //
-//        List<old.interview.Item> items = new ArrayList<>(List.of(new old.interview.Item(1, 100, 100),
-//                new old.interview.Item(2, 850, 850)));
+//        List<old.leetcode.Item> items = new ArrayList<>(List.of(new old.leetcode.Item(1, 100, 100),
+//                new old.leetcode.Item(2, 850, 850)));
 //
-//        List<old.interview.Item> finalItem = interviewClass.getBucket(3, items);
+//        List<old.leetcode.Item> finalItem = interviewClass.getBucket(3, items);
 //        assertEquals(items.get(0).getFinalPrice(), finalItem.get(0).getFinalPrice());
 //    }
 }

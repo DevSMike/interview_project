@@ -1,14 +1,14 @@
 package old.personAPI;
 
-import old.personAPI.exception.IncorrectDataException;
-import old.personAPI.model.Product;
+import personAPI.exception.IncorrectDataException;
+import personAPI.model.Product;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import old.personAPI.repository.ProductRepository;
-import old.personAPI.service.ProductServiceImpl;
+import personAPI.repository.ProductRepository;
+import personAPI.service.ProductServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
