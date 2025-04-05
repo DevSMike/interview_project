@@ -1,6 +1,6 @@
-package old.personAPI;
+package yandex;
 
-import interview.ATM;
+import interview.yandex.ATM;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestClass {
+public class ATMTest {
     private final ATM testClass = new ATM();
 
     @Test

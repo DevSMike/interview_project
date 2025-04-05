@@ -1,9 +1,9 @@
-package personAPI.service;
+package interview.nonton.service;
 
-import personAPI.exception.IncorrectDataException;
+import interview.nonton.exception.IncorrectDataException;
+import interview.nonton.model.Product;
+import interview.nonton.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import personAPI.model.Product;
-import personAPI.repository.ProductRepository;
 
 import java.util.List;
 

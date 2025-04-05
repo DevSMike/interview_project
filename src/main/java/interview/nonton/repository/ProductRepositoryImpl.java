@@ -1,6 +1,6 @@
-package personAPI.repository;
+package interview.nonton.repository;
 
-import personAPI.model.Product;
+import interview.nonton.model.Product;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,4 +1,4 @@
-package interview;
+package interview.yandex;
 
 import lombok.Getter;
 import lombok.Setter;

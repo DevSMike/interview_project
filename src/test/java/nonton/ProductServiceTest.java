@@ -1,14 +1,14 @@
-package old.personAPI;
+package nonton;
 
-import personAPI.exception.IncorrectDataException;
-import personAPI.model.Product;
+import interview.nonton.exception.IncorrectDataException;
+import interview.nonton.model.Product;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import personAPI.repository.ProductRepository;
-import personAPI.service.ProductServiceImpl;
+import interview.nonton.repository.ProductRepository;
+import interview.nonton.service.ProductServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;

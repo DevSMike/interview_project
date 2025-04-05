@@ -1,10 +1,10 @@
-package old.personAPI;
+package nonton;
 
 import lombok.extern.slf4j.Slf4j;
-import personAPI.model.Product;
+import interview.nonton.model.Product;
 import org.junit.jupiter.api.Test;
-import personAPI.repository.ProductRepository;
-import personAPI.repository.ProductRepositoryImpl;
+import interview.nonton.repository.ProductRepository;
+import interview.nonton.repository.ProductRepositoryImpl;
 
 import java.util.List;
 import java.util.Optional;

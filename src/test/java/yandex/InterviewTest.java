@@ -1,4 +1,6 @@
-import interview.InterviewClass;
+package yandex;
+
+import interview.yandex.InterviewClass;
 import leetcode.Item;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +24,7 @@ public class InterviewTest {
 //    public void testGetBucket() {
 //
 //        Map<Integer, Integer> users = Map.of(1, 20, 2, 45);
-//        interviewClass = new old.interview.InterviewClass(users);
+//        interviewClass = new old.interview.yandex.InterviewClass(users);
 //
 //        List<old.leetcode.Item> items = new ArrayList<>(List.of(new old.leetcode.Item(1, 100, 100),
 //                new old.leetcode.Item(2, 850, 850)));
@@ -50,7 +52,7 @@ public class InterviewTest {
 //    public void testGetBucketShouldBeStartBucket() {
 //
 //        Map<Integer, Integer> users = Map.of(1, 20, 2, 45);
-//        interviewClass = new old.interview.InterviewClass(users);
+//        interviewClass = new old.interview.yandex.InterviewClass(users);
 //
 //        List<old.leetcode.Item> items = new ArrayList<>(List.of(new old.leetcode.Item(1, 100, 100),
 //                new old.leetcode.Item(2, 850, 850)));

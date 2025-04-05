@@ -1,6 +1,6 @@
-package personAPI.service;
+package interview.nonton.service;
 
-import personAPI.model.Product;
+import interview.nonton.model.Product;
 
 import java.util.List;
 

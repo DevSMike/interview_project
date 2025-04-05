@@ -1,4 +1,4 @@
-package personAPI.model;
+package interview.nonton.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

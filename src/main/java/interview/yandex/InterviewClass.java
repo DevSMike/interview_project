@@ -1,4 +1,4 @@
-package interview;
+package interview.yandex;
 
 import leetcode.Item;
 import lombok.Data;
